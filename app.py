@@ -22,8 +22,8 @@ SYSTEM_PROMPT = """
 **【説明文】**
 --------------------------------------------------
 ご覧いただきありがとうございます！
-その他もたくさんの良質な品物をお安く出品しております。
-ぜひフォローお願いいたします！
+「お片づけの丸蔵」＆「無人古着ヒゲロンゲ」です。
+買取・引取した良質な品物をお安く出品しております。
 
 ■商品情報
 ・商品名：
@@ -51,7 +51,6 @@ st.set_page_config(page_title="メルカリ出品くん", layout="wide")
 st.title("📦 メルカリ出品くん for 丸蔵")
 
 # --- APIキーの自動取得 ---
-# Secretsに保存されていればそれを使い、なければ入力欄を表示する
 api_key = None
 if "GOOGLE_API_KEY" in st.secrets:
     api_key = st.secrets["GOOGLE_API_KEY"]
@@ -74,11 +73,11 @@ if uploaded_file is not None:
             with st.spinner("AIが考え中..."):
                 try:
                     genai.configure(api_key=api_key)
-                    model = genai.GenerativeModel('gemini-pro-vision')
+                    # ここが最新モデルの設定です
+                    model = genai.GenerativeModel('gemini-1.5-flash')
+                    
                     response = model.generate_content([SYSTEM_PROMPT, image])
                     st.success("生成完了！")
                     st.code(response.text, language="markdown")
                 except Exception as e:
                     st.error(f"エラー: {e}")
-
-
