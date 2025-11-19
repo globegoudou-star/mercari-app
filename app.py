@@ -74,10 +74,11 @@ if uploaded_file is not None:
             with st.spinner("AIが考え中..."):
                 try:
                     genai.configure(api_key=api_key)
-                    model = genai.GenerativeModel('gemini-1.5-flash-latest')
+                    model = genai.GenerativeModel('gemini-pro-vision')
                     response = model.generate_content([SYSTEM_PROMPT, image])
                     st.success("生成完了！")
                     st.code(response.text, language="markdown")
                 except Exception as e:
                     st.error(f"エラー: {e}")
+
 
